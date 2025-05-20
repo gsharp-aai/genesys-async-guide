@@ -65,7 +65,7 @@ S3_BUCKET=your-bucket-name
 S3_KEY_PREFIX=calls/
 AWS_ACCESS_KEY_ID=your-access-key
 AWS_SECRET_ACCESS_KEY=your-secret-key
-CONVERT_AUDIO=true
+RECORDINGS_DIR=./recordings
 ```
 
 ## Running the Application
