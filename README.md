@@ -1,6 +1,6 @@
 # Genesys AudioHook Recorder
 
-This Node.js application implements a WebSocket server that follows the Genesys AudioHook protocol to record call audio and upload it to Amazon S3.
+This Node.js application implements a WebSocket Express server that follows the Genesys AudioHook protocol to receive call audio, format it to `wav`, and upload it to S3.
 
 ## Features
 
@@ -55,12 +55,9 @@ The application can be configured using environment variables:
 | S3_KEY_PREFIX | Prefix for S3 object keys | calls/ |
 | API_KEY | API key for authentication | your-api-key-here |
 
-Additionally, standard AWS credentials environment variables (`AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`) are required for S3 access.
-
-## Running the Application
+Set environment variables in `.env` file:
 
 ```bash
-# Set environment variables in .env
 PORT=3000
 API_KEY=your-api-key-here
 AWS_REGION=us-east-1
@@ -69,7 +66,11 @@ S3_KEY_PREFIX=calls/
 AWS_ACCESS_KEY_ID=your-access-key
 AWS_SECRET_ACCESS_KEY=your-secret-key
 CONVERT_AUDIO=true
+```
 
+## Running the Application
+
+```bash
 # Start the server
 npm start
 ```
@@ -78,21 +79,8 @@ npm start
 
 1. In Genesys Cloud, create a new AudioHook integration
 2. Set the WebSocket URI to the deployed application URL (e.g., `wss://your-domain.com`)
-3. Configure the API key to match the one set in your application
+3. Configure the API key to match the `API_KEY` variable in your `env`
 4. Associate the AudioHook integration with your call flows
-
-## Recording Format
-
-The application records audio in the raw PCMU format. The file naming convention is:
-```
-{timestamp}_{conversationId}_{participantId}.raw
-```
-
-To convert the raw audio to a more useful format (like WAV), you can use tools like FFmpeg:
-
-```bash
-ffmpeg -f mulaw -ar 8000 -channels 2 -i recording.raw output.wav
-```
 
 ## Troubleshooting
 
