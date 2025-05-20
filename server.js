@@ -74,14 +74,12 @@ const wss = new WebSocketServer({
     const sessionId = info.req.headers['Audiohook-Session-Id'] || info.req.headers['audiohook-session-id'];
     const organizationId = info.req.headers['Audiohook-Organization-Id'] || info.req.headers['audiohook-organization-id'];
     
-    
     // Verify API key matches
-    // TODO!
-    // if (apiKey !== config.apiKey) {
-    //   console.log('Authentication failed: Invalid API key');
-    //   callback(false, 401, 'Unauthorized');
-    //   return;
-    // }
+    if (config.apiKey !== apiKey) {
+      console.log('Authentication failed: Invalid API key');
+      callback(false, 401, 'Unauthorized');
+      return;
+    }
     
     // Validate request signature if client secret is configured
     if (!validateSignature(info.req)) {
